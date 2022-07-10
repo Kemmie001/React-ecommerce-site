@@ -3,6 +3,7 @@ import { Wrapper } from "./styles";
 import {RiDeleteBin5Line} from 'react-icons/ri'
 import { useState } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import { Link } from 'react-router-dom'
 
 const Cart = () => {
     
@@ -112,7 +113,7 @@ const Cart = () => {
     </div>
     <p>Tax included and shipping calculated at checkout</p>
     <button className="btn-primary">
-        Checkout
+    <Link style={{color:"#9E005D"}} to="/checkout">Checkout</Link>
     </button>
     </div>
 </div>

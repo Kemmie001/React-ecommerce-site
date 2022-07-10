@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { Link } from 'react-router-dom'
 import { useState } from "react";
 import MainLayout from "../../components/Layout/MainLayout";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -59,7 +59,7 @@ const  ProductPage = () => {
                         </div>
                         <div className="">
                         <button className="btn-primary">
-                            Add to Cart
+                        <Link style={{color:"#9E005D"}} to="/cart"> Add to Cart</Link> 
                         </button>
                         </div>
                     </div>
