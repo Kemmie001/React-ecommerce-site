@@ -47,7 +47,7 @@ function Nav() {
                                 <Link to='/about'>About</Link>
                                 </li>
                                 <li className="">
-                                <a href='/Contact'>Contact us</a>
+                                <a href='/'>Contact us</a>
                                 </li>
                             </ul>
                             </div>
