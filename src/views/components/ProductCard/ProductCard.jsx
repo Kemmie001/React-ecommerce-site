@@ -1,29 +1,35 @@
 import { Wrapper } from "./styles";
 import {FaCartPlus} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 
-const ProductCard = () => {
+const ProductCard = ({item}) => {
+    const discountPrice = item.price - (item.price * (item.discount/100))
     return ( 
         <Wrapper>
-            <Link to="/product-details">
+            <Link to={`/product-details/${item.id}`}>
             <div className="product-card">
                 <span className="discount">
-                    50%
+                    {item.discount}%
                 </span>
                 <div className="product-img">
-                    <img src="/assets/product1.png" alt="" />
+                    <img src={item.image} alt="" />
                 </div>
                 <div className="">
-                    <p className="product">Brown Leather palm</p>
-                    <h6 className="price">N40,0000</h6>
+                    <p className="product">{item.name}</p>
+                    <h6 className="price">N{discountPrice}</h6>
                    <span className="cart">
-                   <p className="slash-price">N40,0000</p>
-                   <FaCartPlus />
+                   <p className="slash-price">N{item.price}</p>
+                   {/* <FaCartPlus /> */}
                    </span>
                 </div>
-            </div></Link>
+            </div>
+            </Link>
         </Wrapper>
      );
 }
  
+ProductCard.propTypes = {
+	item: PropTypes.object.isRequired
+}
 export default ProductCard;

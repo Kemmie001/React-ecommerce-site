@@ -1,8 +1,10 @@
 import { FaArrowRight } from "react-icons/fa";
 import ProductCard from "../../../components/ProductCard/ProductCard";
+import PropTypes from 'prop-types';
 import { Wrapper } from "./styles";
 
-const BestSeller = () => {
+const BestSeller = ({product}) => {
+  
     return (  
         <Wrapper>
             <div className="best-seller">
@@ -12,14 +14,10 @@ const BestSeller = () => {
                 </h3>
                 </div>
                 <div className="products">
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
+                    {
+                        product.map((item) =>  <ProductCard key={item.id}  item={item}/>
+                        )
+                    }
                 </div>
                 <div className="link">
                 <a href="">See More  </a>
@@ -29,5 +27,8 @@ const BestSeller = () => {
         </Wrapper>
     );
 }
- 
+
+BestSeller.propTypes = {
+    product: PropTypes.array
+}
 export default BestSeller;

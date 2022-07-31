@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
         font-weight: 500;
         padding: 1rem 5%;
         display: flex;
+        align-items: center;
         justify-content: space-between;
         h3{
             display: none;
@@ -23,6 +24,13 @@ export const Wrapper = styled.div`
             background: #FFEA05;
             border-radius: 4px;
             color: #9E005D;
+        }
+        .cart-icon {
+            font-size: 24px;
+            font-weight: 500;
+            @media screen and (min-width: 768px){
+                display: none;
+            }
         }
         }
         

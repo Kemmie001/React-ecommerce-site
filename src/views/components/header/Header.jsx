@@ -2,6 +2,7 @@ import React from "react";
 import { Content, Wrapper } from './styles';
 import Nav from '../nav/Nav'
 import { Link } from 'react-router-dom'
+import { FiShoppingCart } from "react-icons/fi";
 
 const Header = () => {
     return ( 
@@ -9,7 +10,7 @@ const Header = () => {
             <Content>
             <div className="header">
             <div className="head-ad">
-            <marquee>Free delivery on Orders Above N25,000 anywhere in Nigeria </marquee>
+            {/* <marquee>Free delivery on Orders Above N25,000 anywhere in Nigeria </marquee> */}
                 <h3>Free delivery on Orders Above N25,000 anywhere in Nigeria</h3>
                 <div className="head-signin">
                     <button>
@@ -17,6 +18,11 @@ const Header = () => {
                     </button>
                     <button className="btn-primary"><Link style={{color:"#9E005D"}} to="/signup">Register</Link></button>
                 </div>
+                <span className="cart-icon">
+                    <Link to='/cart'>
+                        <FiShoppingCart />
+                    </Link>
+                </span>
             </div>
            
             <Nav />

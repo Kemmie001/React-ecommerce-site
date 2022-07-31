@@ -22,6 +22,8 @@ text-align: center;
 background: #FBF35C;
 }
 .product-img{
+    margin: 0 auto;
+    width: 255px;
     margin: 1rem 0;
         height: 180px;
         overflow-y: hidden;
