@@ -4,65 +4,49 @@ import {RiDeleteBin5Line} from 'react-icons/ri'
 import { useState } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { FaArrowLeft } from "react-icons/fa";
+import { addToCart, decreaseCart, getTotals, removeFromCart } from "../../../features/cartSlice";
+
 
 const Cart = () => {
-    
-    const [products, setproducts] = useState([
-        {
-            name: 'Monkstrap Shoe',
-            quantity: 3,
-            price: 25000,
-            image: '/assets/collection1.png',
-            size: 41,
-        },
-        {
-            name: 'Blue Lady Shoe',
-            quantity: 2,
-            price: 15000,
-            image: '/assets/collection2.png',
-            size: 39,
-        },
-        {
-            name: 'Mokstrap Shoe',
-            quantity: 3,
-            price: 25000,
-            image: '/assets/collection1.png',
-            size: 41,
-        },
-    ])
-    const [subtotal, setsubtotal] = useState(products.reduce((accumulator, product) => {
-        return accumulator + (product.price * product.quantity);
-      }, 0))
-    const addProduct = (id) => {
-        const newProducts = products
-        const item = newProducts[id]
-        item.quantity++
-        setproducts([...newProducts])
-        setsubtotal(newProducts.reduce((accumulator, product) => {
-            return accumulator + (product.price * product.quantity);
-          }, 0))
+    const products = useSelector((state) => state.cart)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getTotals())
+    }, [products, dispatch])
+   
+    const handleRemoveCartItem = (product) => {
+        dispatch(removeFromCart(product))
     }
-    const substractProduct = (id) => {
-        const newProducts = products
-        const item = newProducts[id]
-        item.quantity--
-        setproducts([...newProducts])
-        setsubtotal(newProducts.reduce((accumulator, product) => {
-            return accumulator + (product.price * product.quantity);
-          }, 0))
+    const handleDecreaseCart = (product) => {
+        dispatch(decreaseCart(product))
     }
-    const delProduct = (index) => {
-        const newProducts = products
-        newProducts.splice(index, 1)
-        setproducts([...newProducts])
+    const handleIncreaseCart = (product) => {
+        dispatch(addToCart(product))
     }
+
     return ( 
         <MainLayout>
             <Wrapper >
                 <h3 className="title">
                     Your Cart
                 </h3>
-<table>
+                {
+                    products.cartItems.length === 0 ? (
+            <div className="cart-empty">
+                <p>Your Cart is currently empty</p>
+                <div className="start-shopping">
+                    <Link to="/">
+                        <span><FaArrowLeft/> Start Shopping </span>
+                    </Link>
+                </div>
+            </div>
+        ) :  
+   (
+   <>
+    <table>
   <thead>
   <tr>
     <th>Products</th>
@@ -72,7 +56,8 @@ const Cart = () => {
   </thead>
   <tbody>
     {
-        products.map((product, index) => 
+        products.cartItems &&
+        products.cartItems.map((product, index) => 
         <tr className="product" key={index}>
     <td>
         <div className="shoe">
@@ -88,18 +73,14 @@ const Cart = () => {
     <td>
         <div className="quantity">
             <span>
-                <p onClick={() => {
-                    if (product.quantity > 1){
-                    substractProduct(index)
-                    }
-                }}>-</p>
-                <p>{product.quantity}</p>
-                <p onClick={() => addProduct(index)}>+</p>
+                <p onClick={() => handleDecreaseCart(product)} >-</p>
+                <p>{product.cartQuantity}</p>
+                <p onClick={() => handleIncreaseCart(product)} >+</p>
             </span>
-            <RiDeleteBin5Line onClick={() => delProduct(index)} className="del" />
+            <RiDeleteBin5Line className="del" onClick={() => handleRemoveCartItem(product)} />
         </div>
     </td>
-    <td className="end">N{product.quantity * product.price}</td>
+    <td className="end">N{ product.cartQuantity * product.regular_price}</td>
   </tr>
         )}
   
@@ -109,26 +90,34 @@ const Cart = () => {
     <div>
     <div className="subtotal">
         <h6>Subtotal</h6>
-        <h3>{subtotal}</h3>
+        <h3>N{products.cartTotalAmount}</h3>
     </div>
     <p>Tax included and shipping calculated at checkout</p>
     <button className="btn-primary">
     <Link style={{color:"#9E005D"}} to="/checkout">Checkout</Link>
     </button>
+    <Link style={{color:"#9E005D"}}  to="/">
+        <span style={{display: 'flex', alignItems: 'center', gap: "8px"}}><FaArrowLeft/> Continue Shopping </span>
+    </Link>
     </div>
 </div>
+   </>
+   )
+                }
+
+
 <div className="sug-product">
                 <div>
                 <h3 >
                    Suggested products
                 </h3>
                 </div>
-                <div className="products">
+                {/* <div className="products">
                   <ProductCard />
                   <ProductCard />
                   <ProductCard />
                   <ProductCard />
-                </div>
+                </div> */}
 </div>
 </Wrapper>
 </MainLayout>

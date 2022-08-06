@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
     padding: 5%;
+   
     .page-detail {
         .name{
             font-size: 18px;
@@ -77,6 +78,12 @@ export const Wrapper = styled.div`
                 p{
                     font-size: 16px;
                     line-height: 20px;
+                }
+                li {
+                    padding: 0.3rem 0;
+                }
+                ul{
+                    margin-bottom: 1rem;
                 }
                 button{
                     width: 100%;

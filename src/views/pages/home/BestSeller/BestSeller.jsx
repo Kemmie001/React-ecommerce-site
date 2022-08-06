@@ -1,10 +1,26 @@
 import { FaArrowRight } from "react-icons/fa";
 import ProductCard from "../../../components/ProductCard/ProductCard";
-import PropTypes from 'prop-types';
 import { Wrapper } from "./styles";
+import { useState, useEffect } from "react";
+import axios from 'axios'
+import { Link } from "react-router-dom";
 
-const BestSeller = ({product}) => {
-  
+const BestSeller = () => {
+    const [isLoading, setisLoading] = useState(true)
+    const [page, setpage] = useState(1)
+    const [products, setproducts] = useState()
+    useEffect(() => {   
+        axios
+          .get(`https://loftywebtech.com/onibata/api/products?page=${page}`)
+          .then(response => setproducts(response.data))
+          .catch((err) => {
+            console.log(err)
+            setisLoading(false)
+          })
+          .finally(() => {
+            setisLoading(false)
+          })
+      }, [products]);
     return (  
         <Wrapper>
             <div className="best-seller">
@@ -13,14 +29,17 @@ const BestSeller = ({product}) => {
                     Best Seller
                 </h3>
                 </div>
+                {
+            isLoading ? <p>loading</p> : 
                 <div className="products">
                     {
-                        product.map((item) =>  <ProductCard key={item.id}  item={item}/>
+                        products?.message.products.map((item) =>  <ProductCard key={item.id}  item={item}/>
                         )
                     }
                 </div>
+                }
                 <div className="link">
-                <a href="">See More  </a>
+                <Link to="/products">See More  </Link>
                 <FaArrowRight className="icon"/>
                 </div>
             </div>
@@ -28,7 +47,4 @@ const BestSeller = ({product}) => {
     );
 }
 
-BestSeller.propTypes = {
-    product: PropTypes.array
-}
 export default BestSeller;

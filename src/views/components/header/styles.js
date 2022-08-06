@@ -18,6 +18,29 @@ export const Wrapper = styled.div`
         marquee{
             align-self: center;
         }
+        .cart-icon {
+            font-size: 20px;
+            font-weight: 500;
+           a{
+            color: #ffffff;
+            display: flex;
+            .num{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 16px;
+                border-radius: 50%;
+                height: 16px;
+                font-size: 12px;
+                background-color: #FFEA05;
+                color: #9E005D;
+                margin-top: -10%;
+            }
+           }
+            @media screen and (min-width: 768px){
+                /* display: none; */
+            }
+        }
         .head-signin {
             display: flex;
             .btn-primary{
@@ -25,13 +48,7 @@ export const Wrapper = styled.div`
             border-radius: 4px;
             color: #9E005D;
         }
-        .cart-icon {
-            font-size: 24px;
-            font-weight: 500;
-            @media screen and (min-width: 768px){
-                display: none;
-            }
-        }
+       
         }
         
         

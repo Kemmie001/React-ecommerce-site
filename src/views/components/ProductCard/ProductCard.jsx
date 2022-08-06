@@ -4,22 +4,24 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 
 const ProductCard = ({item}) => {
-    const discountPrice = item.price - (item.price * (item.discount/100))
+
+    const discount = item.regular_price - item.sale_price
+    const discountPercent = 100 - (discount/item.regular_price * 100) 
     return ( 
         <Wrapper>
-            <Link to={`/product-details/${item.id}`}>
+            <Link state={item} to={`/product-details/${item.id}`}>
             <div className="product-card">
                 <span className="discount">
-                    {item.discount}%
+                    {discountPercent}%
                 </span>
                 <div className="product-img">
-                    <img src={item.image} alt="" />
+                    <img src={item.image} alt={item.name} />
                 </div>
                 <div className="">
                     <p className="product">{item.name}</p>
-                    <h6 className="price">N{discountPrice}</h6>
+                    <h6 className="price">N{item.sale_price === null ? item.regular_price : item.sale_price}</h6>
                    <span className="cart">
-                   <p className="slash-price">N{item.price}</p>
+                   <p className="slash-price">N {item.regular_price}</p>
                    {/* <FaCartPlus /> */}
                    </span>
                 </div>

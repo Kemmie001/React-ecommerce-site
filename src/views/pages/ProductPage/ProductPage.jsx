@@ -1,66 +1,72 @@
-import { Link } from 'react-router-dom'
-import { useState } from "react";
 import MainLayout from "../../components/Layout/MainLayout";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { Wrapper } from "./styles";
-import ProductData from "../../../data/product";
-import { useParams } from 'react-router-dom';
+import { useState} from "react";
+import { useLocation} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../features/cartSlice';
+import {useNavigate} from 'react-router-dom'
 
 const  ProductPage = () => {
-    const  productId  = useParams()
-    const [product, setproduct] = useState(ProductData);
-    const [shoe, setShoe] = useState(product.filter(p => p.id == productId.id))
+    const location = useLocation()
+    const [product, setproduct] = useState(location.state)
+
     const sizes = [39, 40, 41, 42, 43, 44, 45]
     const colors = ['brown', 'black', '#E5D2C4']
     const [sizePic, setsizePic] = useState(false)
     const [colorPick, setcolorPick] = useState(false)
-    const discountPrice = shoe[0].price - (shoe[0].price * (shoe[0].discount/100))
-    const [cart, setCart] = useState([])
-    const addToCart = (item) =>{
-        cart.push(item)
-        console.log(cart)
+    const discount = product.regular_price - product.sale_price
+    const discountPercent = 100 - (discount/product.regular_price * 100) 
+    const pickSize = (size) => {
+        setsizePic(size)
+        const newProduct = {...product}
+        newProduct.size = size
+        setproduct(newProduct)
+    }
+    
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const handleAddToCart = (item) =>{
+        dispatch(addToCart(item))
+        navigate('/cart')
     }
     return ( 
         <MainLayout>
             <Wrapper>
                
             <div className="product-page">
-                {
-                    shoe.map((item) => 
-                    
-                    <div className="page-detail" key={item.id}>
+                    <div className="page-detail" key={product.id}>
                 <div className="images">
                     <div className="big-img">
-                        <img src={item.image} alt="" />
+                        <img src={product.image} alt="" />
                     </div>
                     <div className="small-img">
                         <div className="">
-                            <img src={item.image} alt="" />
+                            <img src={product.image} alt="" />
                         </div>
                         <div className="">
-                            <img src={item.image} alt="" />
+                            <img src={product.image} alt="" />
                         </div>
                     </div>
                 </div>
                 <div className="product-details">
                     <h5 className="name">
-                        {item.name}
+                        {product.name}
                     </h5>
-                    <h6 className="price">N{discountPrice}</h6>
+                    <h6 className="price">N{product.sale_price === null ? product.regular_price : product.sale_price}</h6>
                     <span className="slash-price">
-                        <p>N{item.price}</p>
+                        <p>N{product.regular_price}</p>
                         <span className="discount">
-                            {item.discount}% off
+                            {discountPercent}% off
                         </span>
                     </span>
                     <div className="story">
                         <h4>Product Details</h4>
-                        <p >
-                        {item.detail}
-                        </p>
+                        <div dangerouslySetInnerHTML={{__html: product.content}} />
+                        
                         <div className="sizes">
                             {
-                            sizes.map((size, index) => <div key={index} onClick={() => setsizePic(size)} className={`size ${sizePic === size && 'size-spec'}`}>
+                            sizes.map((size, index) => <div key={index} onClick={() => pickSize(size)} className={`size ${sizePic === size && 'size-spec'}`}>
                                 Eur {size}
                             </div> )
                             }
@@ -73,14 +79,13 @@ const  ProductPage = () => {
                             }
                         </div>
                         <div className="">
-                        <button className="btn-primary" onClick={() => addToCart(item)}>
+                        <button className="btn-primary" onClick={() => handleAddToCart(product)}>
                         Add to Cart
                         </button>
                         </div>
                     </div>
                 </div>
-                </div>)
-                }
+                </div> 
                 
 
                 <div className="sug-product">

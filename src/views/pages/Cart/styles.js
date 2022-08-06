@@ -87,7 +87,20 @@ td, th {
         }
     }
     }
-
+    .cart-empty{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 50vh;
+        span{
+            padding-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--primary-color);
+        }
+    }
 `;
 
 

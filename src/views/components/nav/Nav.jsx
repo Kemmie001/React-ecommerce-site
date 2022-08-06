@@ -11,9 +11,9 @@ function Nav() {
             <Content>
                 <div>
                 <div className="head-logo">
-                <div className="logo">
+                <Link to="/" className="logo">
                     <img src="/assets/logo.png" alt="" />
-                </div>
+                </Link>
                 <span className="search-wrapper">
                     <input type="search" name="" placeholder="Search ..." id="" />
                     <div className="search-icon"><FaSearch /></div>
@@ -35,7 +35,9 @@ function Nav() {
                             <div>
                             <ul className="nav-bar">
                                 <li className="logo">
+                                <Link to="/" className="logo">
                                     <img src="/assets/logo.png" alt="" />
+                                </Link>
                                 </li>
                                 <li className="">
                                    <Link to ='/'>Home</Link>
