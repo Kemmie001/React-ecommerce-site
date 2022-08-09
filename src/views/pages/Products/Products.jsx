@@ -1,4 +1,3 @@
-import { FaArrowRight } from "react-icons/fa";
 import {MdOutlineArrowBackIos, MdOutlineArrowForwardIos} from "react-icons/md"
 import MainLayout from "../../components/Layout/MainLayout";
 import ProductCard from "../../components/ProductCard/ProductCard";
