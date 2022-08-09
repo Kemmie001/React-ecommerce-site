@@ -4,6 +4,7 @@ import { Wrapper } from "./styles";
 import { useState, useEffect } from "react";
 import axios from 'axios'
 import { Link } from "react-router-dom";
+import Spinner from "../../../components/Spinner/Spinner";
 
 const BestSeller = () => {
     const [isLoading, setisLoading] = useState(true)
@@ -30,7 +31,7 @@ const BestSeller = () => {
                 </h3>
                 </div>
                 {
-            isLoading ? <p>loading</p> : 
+            isLoading ? <Spinner/> : 
                 <div className="products">
                     {
                         products?.message.products.map((item) =>  <ProductCard key={item.id}  item={item}/>

@@ -34,7 +34,61 @@ export const Wrapper = styled.div`
         }
         
     }
-    
+    .pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.paginationItem {
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  position: relative;
+  margin: 0 5px;
+  color: #000;
+  cursor: pointer;
+}
+
+.paginationItem span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* color: #c4c4c4; */
+  transform: translate(-50%, -50%);
+}
+
+.span-color{
+  color: var(--primary-color);
+}
+
+.prev,
+.next {
+  background: #fff;
+  border: none;
+  padding: 10px;
+  color: var(--primary-color);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.paginationItem.active {
+  pointer-events: none;
+}
+
+.prev.disabled,
+.next.disabled {
+  pointer-events: none;
+  box-shadow: none;
+  color: #999;
+}
   }
 `;
 
