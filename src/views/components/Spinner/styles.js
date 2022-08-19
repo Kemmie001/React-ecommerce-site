@@ -4,7 +4,6 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40vh;
   @keyframes spinner {
   0% {
     transform: rotate(0deg);

@@ -1,11 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../../../components/footer/Footer";
 import Header from "../../../components/header/Header";
+import Spinner from "../../../components/Spinner/Spinner";
 import { Wrapper } from "../styles";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+import {toast} from 'react-toastify'
 
 
 
 const Register = () => {
+    const [isLoading, setisLoading] = useState(false)
+    const [formData, setFormData] = useState({
+		username: '',
+		password: '',
+        email: '',
+        firstname: '',
+        lastname: '',
+        country: '',
+        street: ''
+	})
+
+    const {username, password, email, firstname, lastname, country, street} = formData
+
+    const onChange = (e) => {
+		setFormData((prevState) => ({
+			...prevState,
+			[e.target.name]: e.target.value
+		}))
+	}
+
+    const navigate = useNavigate()
+
+    const signUpUser = async (e) => {
+        e.preventDefault()
+        const userData = {
+           username,
+           password,
+           email,
+           firstname,
+           lastname,
+           country,
+           street
+        }
+        setisLoading(true)
+
+          try {
+            const res = await axios.post('https://loftywebtech.com/onibata/api/signup', userData)
+            setisLoading(false)
+            if(res.data.status === 'success'){
+              navigate('/login')
+            } else {
+              toast.error(res.data.message, {
+            position: "bottom-left",
+           });
+          }
+          } catch (err) {
+            setisLoading(false)
+          }
+      }
     return (
         <Wrapper>
         <Header/>
@@ -15,16 +68,20 @@ const Register = () => {
                 <h3>Register now</h3>
                 <p>Set up your onibata account and shop with us </p>
                 </div>
-                <form>
-                    <input type="text" placeholder="First Name" id="" />
-                    <input type="text" placeholder="Last Name" id="" />
-                    <input type="email" placeholder="Email" />
-                    <input type="passsword" placeholder="Password" id="" />
-                    <input type="password" placeholder="Confirm Password" id="" />
+                <form onSubmit={signUpUser}>
+                    <input type="text" name="firstname" required placeholder="First Name" id="" value={firstname} onChange={onChange} />
+                    <input type="text" name="lastname" required placeholder="Last Name" id="" value={lastname} onChange={onChange} />
+                    <input type="text" placeholder="Username" required name="username" id="" value={username} onChange={onChange} />
+                    <input type="email" placeholder="Email" required name="email" value={email} onChange={onChange} />
+                    <input type="tel" name="phone" placeholder="Phone Number" id="" value={phon} onChange={onChange} />
+                    <input type="text" name="street" placeholder="Address" id="" onChange={onChange} />
+                    <input type="text" name="postal_code" placeholder="Postal Code" id="" onChange={onChange} />
+                    <input type="text" name="country" placeholder="Country" id="" onChange={onChange} />
+                    <input type="passsword" name="password" placeholder="Password" id="" onChange={onChange} />
                     <p className="terms">
                     By clicking Register, you agree to Onibata’s Terms of Use and Privacy Policy. Onibata may send you email messages. however, you may change your preferences in your account settings. We’ll never post without your permission.
                     </p>
-                    <button type="submit">Register</button>
+                    <button type="submit">{isLoading ? <Spinner/>  : "Register" }</button>
                 </form>
             </div>
         </div>
