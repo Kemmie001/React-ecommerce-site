@@ -13,8 +13,8 @@ export const Wrapper = styled.div`
   }
 }
 .loading-spinner {
-  width: 50px;
-  height: 50px;
+  width: 20px;
+  height: 20px;
   border: 2px solid #9E005D; 
   border-top: 2px solid #ffffff; /* Black */
   border-radius: 50%;

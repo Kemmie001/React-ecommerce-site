@@ -3,11 +3,47 @@ import MainLayout from "../../components/Layout/MainLayout";
 import { Wrapper } from "./styles";
 import { Link } from 'react-router-dom'
 import { FaGreaterThan } from "react-icons/fa";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import {  getTotals } from "../../../features/cartSlice";
+// import {toast} from 'react-toastify';
+// import axios from 'axios'
+
 
 const Checkout
  = () => {
+    const products = useSelector((state) => state.cart)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getTotals())
+        // getOrders()
+    }, [products, dispatch])
     const [displayScreen, setdisplayScreen] = useState('information')
+    // const [orders, setorders] = useState([])
+    // const getOrders = async (e) => {
+    //     e.preventDefault()
+    //     const user = localStorage.getItem("onibata-user");
+    //     const user_details = JSON.parse(user)
+    //     const userData = {
+    //        username: user_details.username,
+    //        auth_token: user_details.token,
+    //     }
+
+    //       try {
+    //         const res = await axios.post('https://loftywebtech.com/onibata/api/get-orders', userData)
+    //         if(res.data.status === 'success'){
+    //             setorders(res.data.message.orders)
+    //         } else {
+    //           toast.error("This shoe is out of Stock", {
+    //         position: "bottom-left",
+    //        });
+    //       }
+    //       } catch (err) {
+    //         toast.error(err.data.message, {
+    //             position: "bottom-left",
+    //            });
+    //       }
+    //   }
     return (  
     <MainLayout>
          <Wrapper>
@@ -90,37 +126,27 @@ const Checkout
                     </div>}
                 </div>
                 <div className="order-bg">
-                    <div className="order">
-                        <div className="order-img">
-                            <img src="/assets/product3.png" alt="" />
+                {
+                    products.cartItems &&
+                    products.cartItems.map((product, index) => 
+                    <div className="order" key={index}>
+                        <div className="order-img" >
+                            <img src={product.image}  alt="" />
                         </div>
                         <div className="order-detail">
                             <div>
-                                <h6>Monkstrap shoe</h6>
+                                <h6>{product.name}</h6>
                                 <span className="size">
-                                    Eur 45
+                                    Eur {product.size}
                                 </span>
                             </div>
-                            <p className="price">25000</p>
+                            <p className="price">{product.cartQuantity} X { product.regular_price}</p>
                         </div>
                     </div>
-                    <div className="order">
-                        <div className="order-img">
-                            <img src="/assets/product3.png" alt="" />
-                        </div>
-                        <div className="order-detail">
-                            <div>
-                                <h6>Monkstrap shoe</h6>
-                                <span className="size">
-                                    Eur 45
-                                </span>
-                            </div>
-                            <p className="price">25000</p>
-                        </div>
-                    </div>
+ )}
                     <div className="sub-total">
                         <h5>Subtotal</h5>
-                        <p className="price">25000</p>
+                        <p className="price">N{products.cartTotalAmount}</p>
                     </div>
                 </div>
             </div>

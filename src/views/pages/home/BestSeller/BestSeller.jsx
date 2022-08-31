@@ -13,7 +13,7 @@ const BestSeller = () => {
     useEffect(() => {   
         axios
           .get(`https://loftywebtech.com/onibata/api/products?page=${page}`)
-          .then(response => setproducts(response.data))
+          .then(response => setproducts(response.data.message.products))
           .catch((err) => {
             console.log(err)
             setisLoading(false)
@@ -21,7 +21,7 @@ const BestSeller = () => {
           .finally(() => {
             setisLoading(false)
           })
-      }, [products]);
+      }, []);
     return (  
         <Wrapper>
             <div className="best-seller">
@@ -34,7 +34,7 @@ const BestSeller = () => {
             isLoading ? <Spinner/> : 
                 <div className="products">
                     {
-                        products?.message.products.map((item) =>  <ProductCard key={item.id}  item={item}/>
+                    products.map((item) =>  <ProductCard key={item.id}  item={item}/>
                         )
                     }
                 </div>

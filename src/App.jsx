@@ -11,6 +11,7 @@ import HomePage from './views/pages/home/HomePage'
 import Checkout from './views/pages/Checkout/Checkout';
 import NotFound from './views/pages/NotFound/NotFound';
 import { ToastContainer } from 'react-toastify'
+import Protected from './views/components/ProtectedRoute/Protected';
 
 function App() {
   return (
@@ -24,7 +25,14 @@ function App() {
         <Route exact path='/about' element={<AboutUs />}></Route>
         <Route exact path='/products' element={<Products />}></Route>
         <Route exact path='/product-details/:id' element={<ProductPage />}></Route>
-        <Route exact path='/checkout' element={<Checkout />}></Route>
+        <Route
+        path="/checkout"
+        element={
+        <Protected >
+        <Checkout/>
+        </Protected>
+        }
+        />
         <Route exact path='/cart' element={<Cart />}></Route>
         <Route path="/not-found" element={ <NotFound/> }></Route>
         <Route

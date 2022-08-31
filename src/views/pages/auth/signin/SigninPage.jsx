@@ -39,7 +39,16 @@ const Login = () => {
             const res = await axios.post('https://loftywebtech.com/onibata/api/login', userData)
             setisLoading(false)
             if(res.data.status === 'success'){
-              navigate('/cart')
+              const userDetails = {
+                token: res.data.message.auth_token,
+                isLoggedIn: true,
+                username: userData.username
+              }
+              localStorage.setItem('onibata-user', JSON.stringify(userDetails))
+              toast.success("Successfully logged in", {
+                position: "bottom-left",
+               })
+              navigate('/checkout')
             } else {
               toast.error(res.data.message, {
             position: "bottom-left",
@@ -60,7 +69,7 @@ const Login = () => {
                 </div>
                 <form onSubmit={loginUser}>
                     <input type="text" name="username" value={username} required placeholder="Username" onChange={onChange} />
-                    <input type="passsword" name="password" value={password} required placeholder="Password" id="" onChange={onChange} />
+                    <input type="password" name="password" value={password} required placeholder="Password" id="" onChange={onChange} />
                     <p className="terms">
                     Forgot Password?
                     </p>

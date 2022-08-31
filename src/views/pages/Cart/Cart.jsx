@@ -1,17 +1,22 @@
 import MainLayout from "../../components/Layout/MainLayout";
 import { Wrapper } from "./styles";
 import {RiDeleteBin5Line} from 'react-icons/ri'
-import { useState } from "react";
+import axios from 'axios'
 import ProductCard from "../../components/ProductCard/ProductCard";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
+import {toast} from 'react-toastify'
 import { addToCart, decreaseCart, getTotals, removeFromCart } from "../../../features/cartSlice";
 
 
 const Cart = () => {
+    const [isLoading, setisLoading] = useState(false)
     const products = useSelector((state) => state.cart)
+    const orders = []
+    
+    
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getTotals())
@@ -26,7 +31,47 @@ const Cart = () => {
     const handleIncreaseCart = (product) => {
         dispatch(addToCart(product))
     }
+    const navigate = useNavigate()
+    
+    const placeOrder = async (e) => {
+        e.preventDefault()
+        const user = localStorage.getItem("onibata-user");
+        const user_details = JSON.parse(user)
+        for (let i=0; i < products.cartItems.length; i++){
+            
+            const order = {
+                product_id: products.cartItems[i].id,
+                quantity: products.cartItems[i].cartQuantity
+            }
+            if (!orders.includes(order.product_id)) {
+                orders.push(order)
+              } 
+        }
+        const userData = {
+           username: user_details.username,
+           auth_token: user_details.token,
+           orders: orders
+        }
+        setisLoading(true)
 
+          try {
+            const res = await axios.post('https://loftywebtech.com/onibata/api/place-order', userData)
+            setisLoading(false)
+            if(res.data.status === 'success'){
+              navigate('/checkout')
+            } else {
+                navigate('/checkout')
+              toast.error("This shoe is out of Stock", {
+            position: "bottom-left",
+           });
+          }
+          } catch (err) {
+            toast.error(err.data.message, {
+                position: "bottom-left",
+               });
+            setisLoading(false)
+          }
+      }
     return ( 
         <MainLayout>
             <Wrapper >
@@ -93,8 +138,8 @@ const Cart = () => {
         <h3>N{products.cartTotalAmount}</h3>
     </div>
     <p>Tax included and shipping calculated at checkout</p>
-    <button className="btn-primary">
-    <Link style={{color:"#9E005D"}} to="/checkout">Checkout</Link>
+    <button onClick={placeOrder} className="btn-primary">
+        Checkout
     </button>
     <Link style={{color:"#9E005D"}}  to="/">
         <span style={{display: 'flex', alignItems: 'center', gap: "8px"}}><FaArrowLeft/> Continue Shopping </span>

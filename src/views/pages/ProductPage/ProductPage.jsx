@@ -4,8 +4,8 @@ import { Wrapper } from "./styles";
 import { useState} from "react";
 import { useLocation} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../../features/cartSlice';
-import {useNavigate} from 'react-router-dom'
+import { addToCart, getTotals } from '../../../features/cartSlice';
+// import {useNavigate} from 'react-router-dom'
 
 const  ProductPage = () => {
     const location = useLocation()
@@ -25,10 +25,11 @@ const  ProductPage = () => {
     }
     
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const handleAddToCart = (item) =>{
         dispatch(addToCart(item))
-        navigate('/cart')
+        dispatch(getTotals())
+        // navigate('/cart')
     }
     return ( 
         <MainLayout>

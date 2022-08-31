@@ -21,7 +21,7 @@ const Register = () => {
         street: ''
 	})
 
-    const {username, password, email, firstname, lastname, country, street} = formData
+    const {username, password, email, firstname, lastname, country, street, phone} = formData
 
     const onChange = (e) => {
 		setFormData((prevState) => ({
@@ -38,6 +38,7 @@ const Register = () => {
            username,
            password,
            email,
+           phone,
            firstname,
            lastname,
            country,
@@ -49,7 +50,7 @@ const Register = () => {
             const res = await axios.post('https://loftywebtech.com/onibata/api/signup', userData)
             setisLoading(false)
             if(res.data.status === 'success'){
-              navigate('/login')
+              navigate('/signin')
             } else {
               toast.error(res.data.message, {
             position: "bottom-left",
@@ -73,11 +74,10 @@ const Register = () => {
                     <input type="text" name="lastname" required placeholder="Last Name" id="" value={lastname} onChange={onChange} />
                     <input type="text" placeholder="Username" required name="username" id="" value={username} onChange={onChange} />
                     <input type="email" placeholder="Email" required name="email" value={email} onChange={onChange} />
-                    <input type="tel" name="phone" placeholder="Phone Number" id="" value={phon} onChange={onChange} />
+                    <input type="tel" name="phone" placeholder="Phone Number" id="" value={phone} onChange={onChange} />
                     <input type="text" name="street" placeholder="Address" id="" onChange={onChange} />
-                    <input type="text" name="postal_code" placeholder="Postal Code" id="" onChange={onChange} />
                     <input type="text" name="country" placeholder="Country" id="" onChange={onChange} />
-                    <input type="passsword" name="password" placeholder="Password" id="" onChange={onChange} />
+                    <input type="password" name="password" placeholder="Password" id="" onChange={onChange} />
                     <p className="terms">
                     By clicking Register, you agree to Onibata’s Terms of Use and Privacy Policy. Onibata may send you email messages. however, you may change your preferences in your account settings. We’ll never post without your permission.
                     </p>
