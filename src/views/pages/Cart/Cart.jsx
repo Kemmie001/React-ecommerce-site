@@ -43,7 +43,7 @@ const Cart = () => {
                 product_id: products.cartItems[i].id,
                 quantity: products.cartItems[i].cartQuantity
             }
-            if (!orders.includes(order.product_id)) {
+            if (!orders.includes(order.product_id)) { 
                 orders.push(order)
               } 
         }
