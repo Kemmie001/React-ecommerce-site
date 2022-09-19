@@ -136,6 +136,20 @@ export const Wrapper = styled.div`
                 border-top: 1px solid var(--primary-color);;
             }
         }
+        input[type=email],
+        input[type=tel],
+        input[type=text]{
+                width: 80%;
+                margin-right: 10px;
+                padding: 10px 10px;
+                border: 1px solid #c4c4c4;
+                border-radius: 4px;
+                outline: none;
+                margin-top: 1rem;
+        }
+        .btn{
+            margin-top:1.5rem;
+        }
   }
 `;
 

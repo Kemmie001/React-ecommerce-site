@@ -6,6 +6,7 @@ import { FaGreaterThan } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import {  getTotals } from "../../../features/cartSlice";
+import { PaystackButton } from 'react-paystack'
 // import {toast} from 'react-toastify';
 // import axios from 'axios'
 
@@ -44,6 +45,44 @@ const Checkout
     //            });
     //       }
     //   }
+    const publicKey = "pk_test_fa9202b0e0d7f1aa2bdb13e0da5631701b9d6a37"
+
+  const amount = (products.cartTotalAmount * 100)// Remember, set in kobo!
+
+  const [email, setEmail] = useState("")
+
+  const [name, setName] = useState("")
+
+  const [phone, setPhone] = useState("")
+  const componentProps = {
+
+    email,
+
+    amount,
+
+    metadata: {
+
+      name,
+
+      phone,
+
+    },
+
+    publicKey,
+
+    text: "Pay Now",
+
+    onSuccess: () =>
+
+      alert("Thanks for doing business with us! Come back soon!!"),
+
+    onClose: () => {
+        setEmail("")
+        setName("")
+        setPhone("")
+    },
+
+  }
     return (  
     <MainLayout>
          <Wrapper>
@@ -56,11 +95,11 @@ const Checkout
                                 <Link to="/cart" className="checkout-link">Cart <FaGreaterThan className="icon"/></Link>
                                 <span className={`checkout-link ${displayScreen === 'information' && 'link'} `}  onClick={() => setdisplayScreen('information')}>Information <FaGreaterThan className="icon"/></span>
                                 <span className={`checkout-link ${displayScreen === 'shipping' && 'link'} `}  onClick={() => setdisplayScreen('shipping')}>Shipping <FaGreaterThan className="icon"/></span>
-                                <span className="checkout-link">Payment </span>
+                                <span className={`checkout-link ${displayScreen === 'payment' && 'link'} `}  onClick={() => setdisplayScreen('payment')}>Payment </span>
                             </div>
                         </div>
                     </nav>
-                     {  displayScreen === 'information' ?
+                     {  displayScreen === 'information' &&
                         <div>
                     <span>
                     <span className="user">
@@ -95,7 +134,8 @@ const Checkout
                             </button>
                         </div>
                     </form>
-                    </div> :
+                    </div> }
+                    { displayScreen === 'shipping' &&
                     <div>
                     <h5>Shipping Address</h5>
                     <form>
@@ -123,7 +163,27 @@ const Checkout
                             </button>
                         </div>
                     </form>
-                    </div>}
+                    </div>} 
+                    {
+                       displayScreen === 'payment'  && 
+                       <div>
+                       <h5>Payment Details</h5>
+                       <div className="container">
+                           <article>
+                           <input type="text" name="Name" value={name} id="" placeholder="Name" onChange={(e) => setName(e.target.value)}/>
+                           </article>
+                           <article>
+                           <input type="email" name="email" value={email} id="" placeholder="Email address" onChange={(e) => setEmail(e.target.value)}/>
+                           </article>
+                           <article>
+                           <input type="tel" name="phone" value={phone} id="" placeholder="Phone number" onChange={(e) => setPhone(e.target.value)} />
+                           </article>
+                           <div className="btn">
+                           <PaystackButton className="btn-primary" {...componentProps} />
+                           </div>
+                       </div>
+                       </div>
+                    }
                 </div>
                 <div className="order-bg">
                 {
