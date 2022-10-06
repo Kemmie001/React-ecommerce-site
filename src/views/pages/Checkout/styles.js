@@ -150,6 +150,20 @@ export const Wrapper = styled.div`
         .btn{
             margin-top:1.5rem;
         }
+        .cart-empty{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 300px;
+        span{
+            padding-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--primary-color);
+        }
+    }
   }
 `;
 

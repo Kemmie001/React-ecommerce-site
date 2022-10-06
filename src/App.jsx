@@ -12,6 +12,8 @@ import Checkout from './views/pages/Checkout/Checkout';
 import NotFound from './views/pages/NotFound/NotFound';
 import { ToastContainer } from 'react-toastify'
 import Protected from './views/components/ProtectedRoute/Protected';
+import ResetPassword from './views/pages/auth/ForgotPassword/ResetPassword';
+import ProfilePage from './views/pages/Profile/Profile';
 
 function App() {
   return (
@@ -22,6 +24,15 @@ function App() {
         <Route exact path='/' element={<HomePage />}></Route>
         <Route exact path='/signup' element={<Register />}></Route>
         <Route exact path='/signin' element={<Login/>}></Route>
+        <Route exact path='/request-password-reset' element={<ResetPassword/>}></Route>
+        <Route
+        path="/my-profile"
+        element={
+        <Protected >
+        <ProfilePage/>
+        </Protected>
+        }
+        />
         <Route exact path='/about' element={<AboutUs />}></Route>
         <Route exact path='/products' element={<Products />}></Route>
         <Route exact path='/product-details/:id' element={<ProductPage />}></Route>

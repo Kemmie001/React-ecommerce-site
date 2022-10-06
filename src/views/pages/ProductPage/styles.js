@@ -90,6 +90,10 @@ export const Wrapper = styled.div`
                     padding: 12px;
                     margin: 1.5rem 0;
                 }
+                button:disabled{
+                    cursor: not-allowed;
+                    opacity: 0.5;
+                }
                 .sizes {
                     display: flex;
                     flex-wrap: wrap;

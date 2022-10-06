@@ -80,7 +80,7 @@ const  ProductPage = () => {
                             }
                         </div>
                         <div className="">
-                        <button className="btn-primary" onClick={() => handleAddToCart(product)}>
+                        <button disabled={!product.size} className="btn-primary" onClick={() => handleAddToCart(product)}>
                         Add to Cart
                         </button>
                         </div>

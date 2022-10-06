@@ -2,7 +2,7 @@
 import MainLayout from "../../components/Layout/MainLayout";
 import { Wrapper } from "./styles";
 import { Link } from 'react-router-dom'
-import { FaGreaterThan } from "react-icons/fa";
+import { FaGreaterThan, FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import {  getTotals } from "../../../features/cartSlice";
@@ -45,7 +45,7 @@ const Checkout
     //            });
     //       }
     //   }
-    const publicKey = "pk_test_fa9202b0e0d7f1aa2bdb13e0da5631701b9d6a37"
+    const publicKey = process.env.REACT_APP_PAYSTACK_PUBLIC_KEY
 
   const amount = (products.cartTotalAmount * 100)// Remember, set in kobo!
 
@@ -164,9 +164,23 @@ const Checkout
                         </div>
                     </form>
                     </div>} 
+
                     {
                        displayScreen === 'payment'  && 
                        <div>
+                        {
+                             products.cartItems.length === 0 ? (
+                                <div className="cart-empty">
+                                    <p>Your Cart is currently empty</p>
+                                    <div className="start-shopping">
+                                        <Link to="/">
+                                            <span><FaArrowLeft/> Start Shopping </span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ) : 
+                    
+                       <div className="">
                        <h5>Payment Details</h5>
                        <div className="container">
                            <article>
@@ -183,10 +197,22 @@ const Checkout
                            </div>
                        </div>
                        </div>
+ }
+                       </div>
                     }
                 </div>
                 <div className="order-bg">
                 {
+                    products.cartItems.length === 0 ? (
+                                <div className="cart-empty">
+                                    <p>Your Cart is currently empty</p>
+                                    <div className="start-shopping">
+                                        <Link to="/">
+                                            <span><FaArrowLeft/> Start Shopping </span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ) : 
                     products.cartItems &&
                     products.cartItems.map((product, index) => 
                     <div className="order" key={index}>
@@ -204,7 +230,7 @@ const Checkout
                         </div>
                     </div>
  )}
-                    <div className="sub-total">
+ <div className="sub-total">
                         <h5>Subtotal</h5>
                         <p className="price">N{products.cartTotalAmount}</p>
                     </div>

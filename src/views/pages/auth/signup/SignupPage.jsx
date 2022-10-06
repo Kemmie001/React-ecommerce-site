@@ -18,10 +18,12 @@ const Register = () => {
         firstname: '',
         lastname: '',
         country: '',
-        street: ''
+        street: '',
+        phone: '',
+        town: '',
 	})
 
-    const {username, password, email, firstname, lastname, country, street, phone} = formData
+    const {username, password, email, firstname, lastname, country, street, phone, town} = formData
 
     const onChange = (e) => {
 		setFormData((prevState) => ({
@@ -42,6 +44,7 @@ const Register = () => {
            firstname,
            lastname,
            country,
+           town,
            street
         }
         setisLoading(true)
@@ -76,6 +79,7 @@ const Register = () => {
                     <input type="email" placeholder="Email" required name="email" value={email} onChange={onChange} />
                     <input type="tel" name="phone" placeholder="Phone Number" id="" value={phone} onChange={onChange} />
                     <input type="text" name="street" placeholder="Address" id="" onChange={onChange} />
+                    <input type="text" name="town" placeholder="Address" id="" onChange={onChange} />
                     <input type="text" name="country" placeholder="Country" id="" onChange={onChange} />
                     <input type="password" name="password" placeholder="Password" id="" onChange={onChange} />
                     <p className="terms">

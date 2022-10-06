@@ -2,13 +2,13 @@ import MainLayout from "../../components/Layout/MainLayout";
 import { Wrapper } from "./styles";
 import {RiDeleteBin5Line} from 'react-icons/ri'
 import axios from 'axios'
-import ProductCard from "../../components/ProductCard/ProductCard";
+// import ProductCard from "../../components/ProductCard/ProductCard";
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import {toast} from 'react-toastify'
-import { addToCart, decreaseCart, getTotals, removeFromCart } from "../../../features/cartSlice";
+import { addToCart, decreaseCart, getTotals, removeFromCart, clearCart } from "../../../features/cartSlice";
 
 
 const Cart = () => {
@@ -57,8 +57,10 @@ const Cart = () => {
           try {
             const res = await axios.post('https://loftywebtech.com/onibata/api/place-order', userData)
             setisLoading(false)
+            
             if(res.data.status === 'success'){
               navigate('/checkout')
+              dispatch(clearCart())
             } else {
                 navigate('/checkout')
               toast.error("This shoe is out of Stock", {
@@ -72,6 +74,7 @@ const Cart = () => {
             setisLoading(false)
           }
       }
+     
     return ( 
         <MainLayout>
             <Wrapper >

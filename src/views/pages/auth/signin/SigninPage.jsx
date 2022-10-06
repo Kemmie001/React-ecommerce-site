@@ -4,7 +4,7 @@ import Header from "../../../components/header/Header";
 import Spinner from "../../../components/Spinner/Spinner";
 import { Wrapper } from "../styles";
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {toast} from 'react-toastify'
 
 
@@ -70,9 +70,9 @@ const Login = () => {
                 <form onSubmit={loginUser}>
                     <input type="text" name="username" value={username} required placeholder="Username" onChange={onChange} />
                     <input type="password" name="password" value={password} required placeholder="Password" id="" onChange={onChange} />
-                    <p className="terms">
-                    Forgot Password?
-                    </p>
+                    <Link style={{color:"#9E005D"}} to="/request-password-reset">
+                        <p className="terms">Forgot password?</p>
+                    </Link>
                     <button type="submit">{isLoading ? <Spinner/>  : "Login"}</button>
                     
                 </form>
