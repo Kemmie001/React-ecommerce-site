@@ -75,14 +75,38 @@ export const Wrapper = styled.div`
                 display: flex;
                 justify-content: space-between;
                 width: 100%;
+                align-items: center;
+                border: 1px solid #c4c4c4;
+                padding: 1rem;
+                border-radius: 10px;
+                margin: 1rem 0;
                 .order-detail{
                     display: flex;
+                   
                 }
                 img{
                     width: 150px;
                     height: 150px;
                     border-radius: 10px;
                 }
+                span{
+                    font-weight: 600;
+                    font-size: 17px;
+                    text-transform: capitalize;
+                }
+            }
+        }
+        .order-info{
+            align-self: center;
+            padding-left: 1rem;
+            h4{
+                font-family: 20px;
+                font-weight: 500; 
+            }
+            h6{
+                font-family: 16px;
+                font-weight: 450;
+                padding-top: 0.5rem;
             }
         }
     }

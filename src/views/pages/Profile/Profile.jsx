@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaAddressBook, FaBox, FaUnlockAlt, FaUserAlt, FaUserEdit } from "react-icons/fa";
+import { FaAddressBook, FaArrowLeft, FaBox, FaUnlockAlt, FaUserAlt, FaUserEdit } from "react-icons/fa";
 import { FiMail, FiMap, FiPhone, FiUser } from "react-icons/fi";
 import {IoLocationOutline} from "react-icons/io5"
 import {GiPostOffice} from "react-icons/gi"
@@ -21,12 +21,14 @@ const ProfilePage = () => {
      useEffect(() => {
         getProfileDetails()
         getAddress()
+        getOrders()
     }, [])
     const user = localStorage.getItem("onibata-user");
     const user_details = JSON.parse(user)
     const {firstname, lastname, email, phone} = profile
     const {country, town, street, postal_code} = address
     const {old_password, new_password, confirmNewPassword} = passwords
+    const [orders, setorders] = useState([])
     const onChange = (e) => {
 		setprofile((prevState) => ({
 			...prevState,
@@ -58,7 +60,6 @@ const ProfilePage = () => {
             const res = await axios.post('https://loftywebtech.com/onibata/api/profile', userData)
             if(res.data.status === 'success'){
                 setprofile(res.data.message)
-                console.log(res.data.message)
             } else {
               toast.error("An error occurred", {
             position: "bottom-left",
@@ -113,7 +114,6 @@ const ProfilePage = () => {
             const res = await axios.post('https://loftywebtech.com/onibata/api/address', userData)
             if(res.data.status === 'success'){
                 setaddress(res.data.message)
-                console.log(res.data.message)
             } else {
               toast.error("An error occurred", {
             position: "bottom-left",
@@ -198,6 +198,32 @@ const ProfilePage = () => {
 
           
       }
+
+    //   Get orders
+    
+    const getOrders = async () => {
+        const user = localStorage.getItem("onibata-user");
+        const user_details = JSON.parse(user)
+        const userData = {
+           username: user_details.username,
+           auth_token: user_details.token,
+        }
+
+          try {
+            const res = await axios.post('https://loftywebtech.com/onibata/api/get-orders', userData)
+            if(res.data.status === 'success'){
+                setorders(res.data.message.orders)
+            } else {
+              toast.error("This shoe is out of Stock", {
+            position: "bottom-left",
+           });
+          }
+          } catch (err) {
+            toast.error(err.data.message, {
+                position: "bottom-left",
+               });
+          }
+      }
       
 
     return ( 
@@ -252,26 +278,46 @@ const ProfilePage = () => {
                     <h3 className="">
                         Orders
                     </h3>
-                    <ul>
-                        <li>
+                    {
+                    orders.length === 0 ? (
+                                <div className="cart-empty">
+                                    <p>No order has been made..</p>
+                                    <div className="start-shopping">
+                                        <Link to="/">
+                                            <span><FaArrowLeft/> Start Shopping </span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ) : 
+                            orders &&
+                    orders.map((order, index) => 
+                    <ul key={index}>
+                        {
+                        order.products.map((product, index) => 
+                        <li key={index}>
                             <div className="">
                             
                             <div className="order-detail">
                             <div className="">
-                            <img src="/assets/product1.png" alt="" />
+                            <img src={product.product_image}  alt="" />
                             </div>
-                                <div>
-                                <h4>Sandals</h4>
-                                <p>Order-Id: 123456</p>
-                                <h6 className="">
-                                    Date: 22-12-2022
-                                </h6>
-                                </div>
+                            <div className="order-info">
+                            <h4>{product.product_name}</h4>
+                            <p>Order-Id: {order.order_id}</p>
+                            <h6 className="">
+                                Date: 22-12-2022
+                            </h6>
                             </div>
                             </div>
-                            <p>Pending</p>
+                            </div>
+                            <span style={{
+                            color: order.order_status == 'pending' ? '#9d921e' : '#9E005D'
+                            }}>{order.order_status}</span>
                         </li>
+)}
                     </ul>
+                    )
+}
                 </div>
                 }
                 {
