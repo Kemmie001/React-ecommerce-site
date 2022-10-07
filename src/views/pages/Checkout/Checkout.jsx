@@ -7,19 +7,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import {  getTotals } from "../../../features/cartSlice";
 import { PaystackButton } from 'react-paystack'
-// import {toast} from 'react-toastify';
-// import axios from 'axios'
+import {toast} from 'react-toastify';
+import axios from 'axios'
+import Spinner from "../../components/Spinner/Spinner";
 
 
 const Checkout
  = () => {
+    const user = localStorage.getItem("onibata-user");
+    const user_details = JSON.parse(user)
     const products = useSelector((state) => state.cart)
+    const [isLoading, setisLoading] = useState(false)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getTotals())
-        // getOrders()
+        getAddress()
     }, [products, dispatch])
-    const [displayScreen, setdisplayScreen] = useState('information')
+    const [displayScreen, setdisplayScreen] = useState('shipping')
     // const [orders, setorders] = useState([])
     // const getOrders = async (e) => {
     //     e.preventDefault()
@@ -54,6 +58,68 @@ const Checkout
   const [name, setName] = useState("")
 
   const [phone, setPhone] = useState("")
+  const [address, setaddress] = useState({})
+  let {country, town, street, postal_code} = address
+  const onChangeAddress = (e) => {
+    setaddress((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value
+    }))
+}
+// Get User Address
+const getAddress = async () => {
+    // e.preventDefault()
+    
+    const userData = {
+       username: user_details.username,
+       auth_token: user_details.token,
+    }
+
+      try {
+        const res = await axios.post('https://loftywebtech.com/onibata/api/address', userData)
+        if(res.data.status === 'success'){
+            setaddress(res.data.message)
+            console.log(res.data.message)
+        } else {
+          toast.error("An error occurred", {
+        position: "bottom-left",
+       });
+      }
+      } catch (err) {
+        toast.error(err.data.message, {
+            position: "bottom-left",
+           });
+      }
+  }
+  // Update User Address
+  const  updateAddress = async (e) => {
+    e.preventDefault()
+    const userData = {
+        username: user_details.username,
+        auth_token: user_details.token,
+        country,
+        town,
+        street,
+        postal_code 
+    }
+    setisLoading(true)
+
+      try {
+        const res = await axios.put('https://loftywebtech.com/onibata/api/update-address', userData)
+        setisLoading(false)
+        if(res.data.status === 'success'){
+            toast.success(res.data.message, {
+                position: "bottom-left",
+               });
+        } else {
+          toast.error(res.data.message, {
+        position: "bottom-left",
+       });
+      }
+      } catch (err) {
+        setisLoading(false)
+      }
+  }
   const componentProps = {
 
     email,
@@ -92,74 +158,44 @@ const Checkout
                     <nav className="">
                         <div className="nav">
                             <div className="">
-                                <Link to="/cart" className="checkout-link">Cart <FaGreaterThan className="icon"/></Link>
-                                <span className={`checkout-link ${displayScreen === 'information' && 'link'} `}  onClick={() => setdisplayScreen('information')}>Information <FaGreaterThan className="icon"/></span>
-                                <span className={`checkout-link ${displayScreen === 'shipping' && 'link'} `}  onClick={() => setdisplayScreen('shipping')}>Shipping <FaGreaterThan className="icon"/></span>
+                                <Link to="/cart" className="checkout-link">Cart <FaGreaterThan className="icon"/></Link>                                <span className={`checkout-link ${displayScreen === 'shipping' && 'link'} `}  onClick={() => setdisplayScreen('shipping')}>Shipping <FaGreaterThan className="icon"/></span>
                                 <span className={`checkout-link ${displayScreen === 'payment' && 'link'} `}  onClick={() => setdisplayScreen('payment')}>Payment </span>
                             </div>
                         </div>
                     </nav>
-                     {  displayScreen === 'information' &&
-                        <div>
-                    <span>
-                    <span className="user">
-                    <h4>Adekoya Adeola </h4>
-                    <h6> ( morenkency@gmail.com)</h6>
-                    </span>
-                    </span>
-                    <span className="news">
-                        <input type="checkbox" name="" id="" />
-                        <p>Email me with news and offers </p>
-                    </span>
-                    <h5>Information</h5>
-                    <form>
-                        <input type="text" name="country" id="" placeholder="Country/Region" />
-                        <div className="name">
-                            <input type="text" required  name="fname" id="" placeholder="First name" />
-                            <input type="text" required name="lname" id="" placeholder="Last name" />
-                        </div>
-                        <input type="text" name="address" id=""  placeholder="Address"/>
-                        <div className="city">
-                            <input type="text" required name="city" id="" placeholder="City"/>
-                            <input type="text" required name="state" id="" placeholder="State"/>
-                            <input type="text" required name="" id="" placeholder="Postal Code"/>
-                        </div>
-                        <input type="tel" required name="phone" id=""  placeholder="Phone number"/>
-                        <div className="btn">
-                            <button className="btn-primary">
-                                Continue Shipping
-                            </button>
-                            <button className="btn-next">
-                            <Link to="/cart" className="cart">Return to cart</Link>
-                            </button>
-                        </div>
-                    </form>
-                    </div> }
                     { displayScreen === 'shipping' &&
                     <div>
                     <h5>Shipping Address</h5>
-                    <form>
+                    <form >
                         <article>
-                        <input type="text" name="contact" id="" placeholder="Contact" />
+                        <input type="text" value={country} required name="country" id="" onChange={onChangeAddress} placeholder="Country"/>
+                        <p className="change" > Change</p>
+                        </article>
+                        <article>
+                        <input type="text" value={town} required name="town" id=""onChange={onChangeAddress}  placeholder="State"/>
                         <p className="change"> Change</p>
                         </article>
                         <article>
-                        <input type="text" name="ship" id="" placeholder="  Ship to" />
+                        <input type="text" value={street} required name="street" id="" onChange={onChangeAddress}  placeholder="Street"/>
                         <p className="change"> Change</p>
                         </article>
-                        <section className="city">
+                        <article>
+                        <input type="text" value={postal_code} required name="postal_code" onChange={onChangeAddress}  id="" placeholder="Postal Code"/>
+                        <p className="change"> Change</p>
+                        </article>
+                        {/* <section className="city">
                             <label htmlFor="ship-methop"></label>
                             <article>
                             <input type="text" required name="ship-method" id="" placeholder="Standard Shipping"/>
                             <p className="price">N5000</p>
                             </article>
-                        </section>
+                        </section> */}
                         <div className="btn">
-                            <button className="btn-primary">
+                            <button type="click" onClick={() => setdisplayScreen('payment')} className="btn-primary">
                                 Continue Payment
                             </button>
-                            <button className="btn-next">
-                            <Link to="/cart" className="cart">Return to information</Link>
+                            <button type="submit"  onClick={updateAddress} className="btn-next">
+                            {isLoading ? <Spinner />  : "Change Address"}
                             </button>
                         </div>
                     </form>

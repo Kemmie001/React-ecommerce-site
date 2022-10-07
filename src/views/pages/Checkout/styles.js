@@ -83,6 +83,7 @@ export const Wrapper = styled.div`
                     }
                     .btn-next{
                         border: 1px solid #FBF35C;
+                        color: var(--primary-color);
                     }
                 }
                 section{
