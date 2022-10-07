@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const ProductCard = ({item}) => {
 
     const discount = item.regular_price - item.sale_price
-    const discountPercent = 100 - (discount/item.regular_price * 100) 
+    const discountPercent = (discount/item.regular_price * 100) 
     return ( 
         <Wrapper>
             <Link state={item} to={`/product-details/${item.id}`}>
