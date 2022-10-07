@@ -126,6 +126,11 @@ export const Wrapper = styled.div`
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                h6{
+                    font-size: 16px;
+                    font-weight: 500;
+                    text-transform: capitalize;
+                }
             }
             
             }

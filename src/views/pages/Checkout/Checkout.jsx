@@ -21,34 +21,35 @@ const Checkout
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getTotals())
+        getOrders()
         getAddress()
     }, [products, dispatch])
     const [displayScreen, setdisplayScreen] = useState('shipping')
-    // const [orders, setorders] = useState([])
-    // const getOrders = async (e) => {
-    //     e.preventDefault()
-    //     const user = localStorage.getItem("onibata-user");
-    //     const user_details = JSON.parse(user)
-    //     const userData = {
-    //        username: user_details.username,
-    //        auth_token: user_details.token,
-    //     }
+    const [orders, setorders] = useState([])
+    const getOrders = async () => {
+        const user = localStorage.getItem("onibata-user");
+        const user_details = JSON.parse(user)
+        const userData = {
+           username: user_details.username,
+           auth_token: user_details.token,
+        }
 
-    //       try {
-    //         const res = await axios.post('https://loftywebtech.com/onibata/api/get-orders', userData)
-    //         if(res.data.status === 'success'){
-    //             setorders(res.data.message.orders)
-    //         } else {
-    //           toast.error("This shoe is out of Stock", {
-    //         position: "bottom-left",
-    //        });
-    //       }
-    //       } catch (err) {
-    //         toast.error(err.data.message, {
-    //             position: "bottom-left",
-    //            });
-    //       }
-    //   }
+          try {
+            const res = await axios.post('https://loftywebtech.com/onibata/api/get-orders', userData)
+            if(res.data.status === 'success'){
+                setorders(res.data.message.orders)
+                console.log(res.data.message.orders)
+            } else {
+              toast.error("This shoe is out of Stock", {
+            position: "bottom-left",
+           });
+          }
+          } catch (err) {
+            toast.error(err.data.message, {
+                position: "bottom-left",
+               });
+          }
+      }
     const publicKey = process.env.REACT_APP_PAYSTACK_PUBLIC_KEY
 
   const amount = (products.cartTotalAmount * 100)// Remember, set in kobo!
@@ -239,7 +240,7 @@ const getAddress = async () => {
                 </div>
                 <div className="order-bg">
                 {
-                    products.cartItems.length === 0 ? (
+                    orders.length === 0 ? (
                                 <div className="cart-empty">
                                     <p>Your Cart is currently empty</p>
                                     <div className="start-shopping">
@@ -249,23 +250,30 @@ const getAddress = async () => {
                                     </div>
                                 </div>
                             ) : 
-                    products.cartItems &&
-                    products.cartItems.map((product, index) => 
+                   orders &&
+                    orders.map((order, index) => 
                     <div className="order" key={index}>
+                        {
+                        order.order_status == 'pending' &&
+                        order.products.map((product, index) => 
+                        <div className="order" key={index}>
                         <div className="order-img" >
-                            <img src={product.image}  alt="" />
+                        <img src={product.product_image}  alt="" />
                         </div>
                         <div className="order-detail">
                             <div>
-                                <h6>{product.name}</h6>
-                                <span className="size">
-                                    Eur {product.size}
-                                </span>
+                            <h6>{product.product_name}</h6>
                             </div>
-                            <p className="price">{product.cartQuantity} X { product.regular_price}</p>
+                            <p className="price">{product.quantity} X { product.sale_price}</p>
                         </div>
                     </div>
+                        )
+ }
+                    </div>
  )}
+ <div>
+                            
+                         </div>
  <div className="sub-total">
                         <h5>Subtotal</h5>
                         <p className="price">N{products.cartTotalAmount}</p>
