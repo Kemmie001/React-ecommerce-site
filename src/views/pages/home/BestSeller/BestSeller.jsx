@@ -31,6 +31,9 @@ const BestSeller = () => {
                 </h3>
                 </div>
                 {
+                    products ?
+                    <div className="">
+                {
             isLoading ? <Spinner/> : 
                 <div className="products">
                     {
@@ -38,6 +41,9 @@ const BestSeller = () => {
                         )
                     }
                 </div>
+                }
+                </div> :
+                <div className="link">All products are unavailable</div>
                 }
                 <div className="link">
                 <Link to="/products">See More  </Link>
