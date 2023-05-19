@@ -13,13 +13,21 @@ const Products = () => {
   const [isLoading, setisLoading] = useState(true);
   const [isLoadingShoe, setisLoadingShoe] = useState(true);
   const [isLoadingSandal, setisLoadingSandal] = useState(true);
+  const [isLoadingSlippers, setisLoadingSlippers] = useState(true);
+  const [isLoadingFemaleShoe, setisLoadingFemaleShoe] = useState(true);
+  const [isLoadingBelts, setisLoadingBelts] = useState(true);
   const [currentShoePage, setCurrentShoePage] = useState(1);
   const [currentSandalsPage, setCurrentSandalsPage] = useState(1);
+  const [currentSlippersPage, setCurrentSlippersPage] = useState(1);
+  const [currentBeltsPage, setCurrentBeltsPage] = useState(1);
+  const [currentFemaleShoesPage, setCurrentFemaleShoesPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const pageLimit = 5;
   const dataLimit = 10;
   const [sandals, setsandals] = useState();
   const [shoes, setshoes] = useState();
+  const [belts, setbelts] = useState();
+  const [fshoes, setfshoes] = useState();
   const [slippers, setslippers] = useState();
 
   const getShoe = async () => {
@@ -53,17 +61,45 @@ const Products = () => {
   };
 
   const getSlippers = async () => {
-    setisLoading(true);
+    setisLoadingSlippers(true);
 
     try {
       const resSlipper = await axios.get(
-        `https://onibata.loftywebtech.com/products.php?page=${currentSandalsPage}&category=slippers`
+        `https://onibata.loftywebtech.com/products.php?page=${currentSlippersPage}&category=slippers`
       );
       setslippers(resSlipper.data);
-      setisLoading(false);
+      setisLoadingSlippers(false);
     } catch (err) {
       console.log(err);
-      setisLoading(false);
+      setisLoadingSlippers(false);
+    }
+  };
+  const getBelts = async () => {
+    setisLoadingBelts(true);
+
+    try {
+      const resBelt = await axios.get(
+        `https://onibata.loftywebtech.com/products.php?page=${currentBeltsPage}&category=belts`
+      );
+      setbelts(resBelt.data);
+      setisLoadingBelts(false);
+    } catch (err) {
+      console.log(err);
+      setisLoadingBelts(false);
+    }
+  };
+  const getFemaleShoes = async () => {
+    setisLoadingFemaleShoe(true);
+
+    try {
+      const resBelt = await axios.get(
+        `https://onibata.loftywebtech.com/products.php?page=${currentFemaleShoesPage}&category=female-shoes`
+      );
+      setfshoes(resBelt.data);
+      setisLoadingFemaleShoe(false);
+    } catch (err) {
+      console.log(err);
+      setisLoadingFemaleShoe(false);
     }
   };
 
@@ -77,11 +113,19 @@ const Products = () => {
 
   useEffect(() => {
     getSlippers();
-  }, [currentPage]);
+  }, [currentSlippersPage]);
+  useEffect(() => {
+    getBelts();
+  }, [currentBeltsPage]);
+  useEffect(() => {
+    getFemaleShoes();
+  }, [currentFemaleShoesPage]);
 
   const pages = Math.ceil(shoes?.message.total_products / dataLimit);
   const sandalsPages = Math.ceil(sandals?.message.total_products / dataLimit);
   const slippersPages = Math.ceil(slippers?.message.total_products / dataLimit);
+  const beltsPages = Math.ceil(belts?.message.total_products / dataLimit);
+  const FemaleShoePages = Math.ceil(fshoes?.message.total_products / dataLimit);
 
   function goToNextPage() {
     setCurrentShoePage((currentShoePage) => currentShoePage + 1);
@@ -96,10 +140,26 @@ const Products = () => {
     setCurrentSandalsPage((currentSandalsPage) => currentSandalsPage - 1);
   }
   function goToNextSlippersPage() {
-    setCurrentPage((currentSlippersPage) => currentSlippersPage + 1);
+    setCurrentSlippersPage((currentSlippersPage) => currentSlippersPage + 1);
   }
   function goToPreviousSlippersPage() {
-    setCurrentPage((currentSlippersPage) => currentSlippersPage - 1);
+    setCurrentSlippersPage((currentSlippersPage) => currentSlippersPage - 1);
+  }
+  function goToNextBeltsPage() {
+    setCurrentBeltsPage((currentBeltsPage) => currentBeltsPage + 1);
+  }
+  function goToPreviousBeltsPage() {
+    setCurrentBeltsPage((currentBeltsPage) => currentBeltsPage - 1);
+  }
+  function goToNextFemaleShoesPage() {
+    setCurrentFemaleShoesPage(
+      (currentFemaleShoesPage) => currentFemaleShoesPage + 1
+    );
+  }
+  function goToPreviousFemaleShoesPage() {
+    setCurrentFemaleShoesPage(
+      (currentFemaleShoesPage) => currentFemaleShoesPage - 1
+    );
   }
 
   function changePage(event) {
@@ -113,6 +173,14 @@ const Products = () => {
   function changeSlipperPage(event) {
     const pageSlipperNumber = Number(event.target.textContent);
     setCurrentPage(pageSlipperNumber);
+  }
+  function changeFemalePage(event) {
+    const pageFemaleShoeNumber = Number(event.target.textContent);
+    setCurrentPage(pageFemaleShoeNumber);
+  }
+  function changeBeltPage(event) {
+    const pageBeltNumber = Number(event.target.textContent);
+    setCurrentPage(pageBeltNumber);
   }
 
   const getPaginationGroup = () => {
@@ -128,13 +196,23 @@ const Products = () => {
     let startSlipper = Math.floor((currentPage - 1) / pageLimit) * pageLimit;
     return new Array(pageLimit).fill().map((_, idx) => startSlipper + idx + 1);
   };
+  const getBeltsPaginationGroup = () => {
+    let startBelt = Math.floor((currentPage - 1) / pageLimit) * pageLimit;
+    return new Array(pageLimit).fill().map((_, idx) => startBelt + idx + 1);
+  };
+  const getFemaleShoesPaginationGroup = () => {
+    let startFemaleShoe = Math.floor((currentPage - 1) / pageLimit) * pageLimit;
+    return new Array(pageLimit)
+      .fill()
+      .map((_, idx) => startFemaleShoe + idx + 1);
+  };
   return (
     <MainLayout>
       <Wrapper>
         <div className="products-container">
           <div className="category-product">
             <div>
-              <h3>Shoes</h3>
+              <h3>Male Shoes</h3>
             </div>
             {isLoadingShoe ? (
               <Spinner />
@@ -182,6 +260,62 @@ const Products = () => {
                 onClick={goToNextPage}
                 className={`next ${
                   currentShoePage === pages ? "disabled" : ""
+                }`}
+              >
+                <MdOutlineArrowForwardIos />
+              </button>
+            </div>
+          </div>
+          <div className="category-product">
+            <div>
+              <h3>Female shoes</h3>
+            </div>
+            {isLoadingFemaleShoe ? (
+              <Spinner />
+            ) : (
+              <div className="products">
+                {fshoes?.message.products.map((item) => (
+                  <ProductCard key={item.id} item={item} />
+                ))}
+              </div>
+            )}
+            <div className="pagination">
+              {/* previous button */}
+              <button
+                onClick={goToPreviousFemaleShoesPage}
+                className={`prev ${currentPage === 1 ? "disabled" : ""}`}
+              >
+                <MdOutlineArrowBackIos />
+              </button>
+
+              {/* show page numbers */}
+              {getFemaleShoesPaginationGroup().map(
+                (item, index) =>
+                  item <= FemaleShoePages && (
+                    <button
+                      key={index}
+                      onClick={changeFemalePage}
+                      className={`paginationItem ${
+                        currentPage === FemaleShoePages ? "active" : null
+                      }`}
+                    >
+                      <span
+                        className={`${
+                          item === currentPage ? "span-color" : null
+                        }`}
+                      >
+                        {" "}
+                        {item}{" "}
+                      </span>
+                    </button>
+                  )
+              )}
+
+              {/* next button */}
+              <button
+                onClick={goToNextFemaleShoesPage}
+                className={`next ${
+                  currentPage === FemaleShoePages ? "disabled" : ""
                 }`}
               >
                 <MdOutlineArrowForwardIos />
@@ -248,7 +382,7 @@ const Products = () => {
             <div>
               <h3>Slippers</h3>
             </div>
-            {isLoading ? (
+            {isLoadingSlippers ? (
               <Spinner />
             ) : (
               <div className="products">
@@ -294,6 +428,62 @@ const Products = () => {
                 onClick={goToNextSlippersPage}
                 className={`next ${
                   currentPage === slippersPages ? "disabled" : ""
+                }`}
+              >
+                <MdOutlineArrowForwardIos />
+              </button>
+            </div>
+          </div>
+          <div className="category-product">
+            <div>
+              <h3>Belts</h3>
+            </div>
+            {isLoadingBelts ? (
+              <Spinner />
+            ) : (
+              <div className="products">
+                {belts?.message.products.map((item) => (
+                  <ProductCard key={item.id} item={item} />
+                ))}
+              </div>
+            )}
+            <div className="pagination">
+              {/* previous button */}
+              <button
+                onClick={goToPreviousBeltsPage}
+                className={`prev ${currentPage === 1 ? "disabled" : ""}`}
+              >
+                <MdOutlineArrowBackIos />
+              </button>
+
+              {/* show page numbers */}
+              {getBeltsPaginationGroup().map(
+                (item, index) =>
+                  item <= beltsPages && (
+                    <button
+                      key={index}
+                      onClick={changeBeltPage}
+                      className={`paginationItem ${
+                        currentPage === beltsPages ? "active" : null
+                      }`}
+                    >
+                      <span
+                        className={`${
+                          item === currentPage ? "span-color" : null
+                        }`}
+                      >
+                        {" "}
+                        {item}{" "}
+                      </span>
+                    </button>
+                  )
+              )}
+
+              {/* next button */}
+              <button
+                onClick={goToNextBeltsPage}
+                className={`next ${
+                  currentPage === beltsPages ? "disabled" : ""
                 }`}
               >
                 <MdOutlineArrowForwardIos />
