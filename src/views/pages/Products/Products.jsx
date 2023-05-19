@@ -27,7 +27,7 @@ const Products = () => {
 
     try {
       const res = await axios.get(
-        `https://onibata.loftywebtech.com/products.php?page=${currentShoePage}&category=shoes`
+        `https://onibata.loftywebtech.com/products.php?page=${currentShoePage}&category=male-shoes`
       );
       setshoes(res.data);
       setisLoadingShoe(false);
