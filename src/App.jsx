@@ -14,7 +14,9 @@ import { ToastContainer } from 'react-toastify'
 import Protected from './views/components/ProtectedRoute/Protected';
 import ResetPassword from './views/pages/auth/ForgotPassword/ResetPassword';
 import ProfilePage from './views/pages/Profile/Profile';
-
+import Terms from './views/pages/Terms/Terms';
+import Faq from './views/pages/Faq/Faq';
+import ContactUs from './views/pages/ContactUs/ContactUs';
 function App() {
   return (
     <div className="App">
@@ -36,6 +38,9 @@ function App() {
         <Route exact path='/about' element={<AboutUs />}></Route>
         <Route exact path='/products' element={<Products />}></Route>
         <Route exact path='/product-details/:id' element={<ProductPage />}></Route>
+        <Route exact path='/terms' element={<Terms />}></Route>
+        <Route exact path='/faq' element={<Faq />}></Route>
+        <Route exact path='/contact_us' element={<ContactUs />}></Route>
         <Route
         path="/checkout"
         element={

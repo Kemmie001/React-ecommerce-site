@@ -16,7 +16,7 @@ export const Wrapper = styled.div`
         display: flex;
         flex-wrap: wrap;
         gap: 2rem;
-        justify-content: space-evenly;
+        justify-content: start;
         .review{
             padding: 2rem 1rem;
             width: 30%;
