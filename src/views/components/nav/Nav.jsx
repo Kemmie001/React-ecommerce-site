@@ -46,10 +46,10 @@ function Nav() {
                                     <Link to='/products'>Products</Link>
                                 </li>
                                 <li className="">
-                                <Link to='/about'>About</Link>
+                                <Link to='/about'>About us</Link>
                                 </li>
                                 <li className="">
-                                <a href='/'>Contact us</a>
+                                <a href='/contact_us'>Contact us</a>
                                 </li>
                             </ul>
                             </div>
