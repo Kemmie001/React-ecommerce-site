@@ -59,7 +59,7 @@ const Register = () => {
 
     try {
       const res = await axios.post(
-        "https://onibata.loftywebtech.com/signup.php",
+        `${process.env.REACT_APP_BASE_URL}`,
         userData
       );
       setisLoading(false);

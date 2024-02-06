@@ -2,22 +2,25 @@ import { Content, Wrapper, Wrapper2 } from "./styles";
 import { register } from "swiper/element/bundle";
 
 const Banner = () => {
-  register();
-  return (
-    <>
-      <swiper-container
-        slides-per-view="1"
-        speed="5"
-        loop="true"
-        css-mode="true"
-        autoplay
-      >
-        <swiper-slide>
-          <Wrapper>
-            <div>
-              <div className="banner">
-                <div className="">
-                  {/* <h2 className="banner-head">
+	register();
+	return (
+		<>
+			<swiper-container
+				slides-per-view="1"
+				speed="5"
+				loop="true"
+				css-mode="true"
+				autoplay
+				className="slider"
+				style={{ zIndex: "-1" }}
+			>
+				<swiper-slide>
+					<Wrapper>
+						<div>
+							<div className="banner">
+								<div className="">
+									{/* <h2 className="banner-head">
+
                 Nigeria-made Hand-Crafted Footwears That <span className="yellow">Command</span> Immediate Respect From Anyone and Boost Your <span className="yellow">
                 Confidence </span> Anywhere You Go. 
                 </h2> */}

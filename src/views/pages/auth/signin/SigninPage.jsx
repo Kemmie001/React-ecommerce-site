@@ -35,7 +35,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "https://onibata.loftywebtech.com/login.php",
+        `${process.env.REACT_APP_BASE_URL}`,
         userData
       );
       setisLoading(false);
