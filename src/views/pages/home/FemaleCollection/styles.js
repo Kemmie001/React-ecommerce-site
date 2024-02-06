@@ -2,6 +2,16 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   .male-collection{
+    .text-arrangement {
+        width: fit-content;
+        margin: 0 auto;
+    }
+    .text-arrangement > h4 {
+        text-align: center;
+    }
+    .text-arrangement > p {
+        text-align: center;
+    }
     .title{
         background: #9E005D;
         color: #fff;

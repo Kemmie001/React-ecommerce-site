@@ -5,7 +5,15 @@ const Banner = () => {
 	register();
 	return (
 		<>
-			<swiper-container slides-per-view="1" speed="5" loop="true" css-mode="true" autoplay>
+			<swiper-container
+				slides-per-view="1"
+				speed="5"
+				loop="true"
+				css-mode="true"
+				autoplay
+				className="slider"
+				style={{ zIndex: "-1" }}
+			>
 				<swiper-slide>
 					<Wrapper>
 						<div>
