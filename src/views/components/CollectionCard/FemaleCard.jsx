@@ -2,9 +2,9 @@ import { Wrapper } from "./styles";
 
 const CollectionCard = () => {
     const footwear =[
-        {name: 'Black Loafers', price:'N25,000', slash:'N50,000', img:'/assets/w1.jpeg', id:0},
-        {name: 'Black Loafers', price:'N25,000', slash:'N50,000', img:'/assets/w2.jpeg', id:1},
-        {name: 'Black Loafers', price:'N25,000', slash:'N50,000', img:'/assets/w3.jpeg', id:2},
+        {name: 'Dominique Heels', price:'N16,000', slash:'N50,000', img:'/assets/w1.jpeg', id:0},
+        {name: 'Dominique Heels', price:'N16,000', slash:'N50,000', img:'/assets/w2.jpeg', id:1},
+        {name: 'Dominique Heels', price:'N16,000', slash:'N50,000', img:'/assets/w3.jpeg', id:2},
     ]
     return ( 
         <Wrapper>
