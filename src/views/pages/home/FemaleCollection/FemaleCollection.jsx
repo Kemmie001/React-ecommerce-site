@@ -12,7 +12,7 @@ const FemaleCollection = () => {
 				<div className="products">
 					<div className="spec-col">
 						<div className="text-arrangement">
-							<p>TOP COLLECTIONS 2022 </p>
+							<p>TOP COLLECTIONS  </p>
 							<h4>Up to 50% discount </h4>
 						</div>
 						<CollectionCard />
