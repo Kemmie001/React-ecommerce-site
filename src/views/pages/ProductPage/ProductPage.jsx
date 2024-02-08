@@ -7,6 +7,9 @@ import { useDispatch } from "react-redux";
 import { addToCart, getTotals } from "../../../features/cartSlice";
 // import {useNavigate} from 'react-router-dom'
 
+const URL = process.env.REACT_APP_BASE_URL;
+console.log(URL);
+
 const ProductPage = () => {
   const location = useLocation();
   const [product, setproduct] = useState(location.state);
@@ -38,23 +41,14 @@ const ProductPage = () => {
           <div className="page-detail" key={product.id}>
             <div className="images">
               <div className="big-img">
-                <img
-                  src={"https://loftywebtech.com/onibata" + product.image}
-                  alt=""
-                />
+                <img src={`${URL}` + product.image} alt="" />
               </div>
               <div className="small-img">
                 <div className="">
-                  <img
-                    src={"https://loftywebtech.com/onibata" + product.image}
-                    alt=""
-                  />
+                  <img src={`${URL}` + product.image} alt="" />
                 </div>
                 <div className="">
-                  <img
-                    src={"https://loftywebtech.com/onibata" + product.image}
-                    alt=""
-                  />
+                  <img src={`${URL}` + product.image} alt="" />
                 </div>
               </div>
             </div>

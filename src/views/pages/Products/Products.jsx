@@ -9,8 +9,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 
-const URL = process.env.REACT_APP_BASE_URL;
-
 const Products = () => {
   const [isLoading, setisLoading] = useState(true);
   const [isLoadingShoe, setisLoadingShoe] = useState(true);
@@ -81,7 +79,7 @@ const Products = () => {
 
     try {
       const resBelt = await axios.get(
-        `${URL}/products.php?page=${currentBeltsPage}&category=belts`
+        `${URL}products.php?page=${currentBeltsPage}&category=belts`
       );
       setbelts(resBelt.data);
       setisLoadingBelts(false);
@@ -95,7 +93,7 @@ const Products = () => {
 
     try {
       const resBelt = await axios.get(
-        `${URL}/products.php?page=${currentFemaleShoesPage}&category=female-shoes`
+        `${URL}products.php?page=${currentFemaleShoesPage}&category=female-shoes`
       );
       setfshoes(resBelt.data);
       setisLoadingFemaleShoe(false);
