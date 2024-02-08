@@ -14,10 +14,9 @@ const BestSeller = () => {
   const [products, setproducts] = useState();
   useEffect(() => {
     axios
-      .get(`${URL}/products.php?page=${page}`)
+      .get(`${URL}products?page=${page}`)
       .then((response) => {
         setproducts(response.data.message.products);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);

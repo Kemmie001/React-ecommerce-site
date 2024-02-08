@@ -34,7 +34,7 @@ const Checkout = () => {
     };
 
     try {
-      const res = await axios.post(`${URL}/get-orders.php`, userData);
+      const res = await axios.post(`${URL}get-orders`, userData);
       if (res.data.status === "success") {
         setorders(res.data.message.orders);
         console.log(res.data.message.orders);
@@ -76,7 +76,7 @@ const Checkout = () => {
     };
 
     try {
-      const res = await axios.post(`${URL}/address.php`, userData);
+      const res = await axios.post(`${URL}address`, userData);
       if (res.data.status === "success") {
         setaddress(res.data.message);
         console.log(res.data.message);
@@ -105,7 +105,7 @@ const Checkout = () => {
     setisLoading(true);
 
     try {
-      const res = await axios.put(`${URL}/update-address.php`, userData);
+      const res = await axios.put(`${URL}update-address`, userData);
       setisLoading(false);
       if (res.data.status === "success") {
         toast.success(res.data.message, {
