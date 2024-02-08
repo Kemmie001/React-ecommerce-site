@@ -30,12 +30,14 @@ const Products = () => {
   const [fshoes, setfshoes] = useState();
   const [slippers, setslippers] = useState();
 
+  const URL = process.env.REACT_APP_BASE_URL;
+
   const getShoe = async () => {
     setisLoadingShoe(true);
 
     try {
       const res = await axios.get(
-        `https://onibata.coralscale.com/api/products.php?page=${currentShoePage}&category=male-shoes`
+        `${URL}products?page=${currentShoePage}&category=male-shoes`
       );
       setshoes(res.data);
       setisLoadingShoe(false);
@@ -50,7 +52,7 @@ const Products = () => {
 
     try {
       const resSandal = await axios.get(
-        `https://onibata.coralscale.com/api/products.php?page=${currentSandalsPage}&category=sandals`
+        `${URL}products?page=${currentSandalsPage}&category=sandals`
       );
       setsandals(resSandal.data);
       setisLoadingSandal(false);
@@ -65,7 +67,7 @@ const Products = () => {
 
     try {
       const resSlipper = await axios.get(
-        `https://onibata.coralscale.com/api/products.php?page=${currentSlippersPage}&category=slippers`
+        `${URL}products?page=${currentSlippersPage}&category=slippers`
       );
       setslippers(resSlipper.data);
       setisLoadingSlippers(false);
@@ -79,7 +81,7 @@ const Products = () => {
 
     try {
       const resBelt = await axios.get(
-        `${URL}products.php?page=${currentBeltsPage}&category=belts`
+        `${URL}products?page=${currentBeltsPage}&category=belts`
       );
       setbelts(resBelt.data);
       setisLoadingBelts(false);
@@ -93,7 +95,7 @@ const Products = () => {
 
     try {
       const resBelt = await axios.get(
-        `${URL}products.php?page=${currentFemaleShoesPage}&category=female-shoes`
+        `${URL}products?page=${currentFemaleShoesPage}&category=female-shoes`
       );
       setfshoes(resBelt.data);
       setisLoadingFemaleShoe(false);

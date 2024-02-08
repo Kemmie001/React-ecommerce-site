@@ -16,6 +16,8 @@ import {
   clearCart,
 } from "../../../features/cartSlice";
 
+const URL = process.env.REACT_APP_BASE_URL;
+
 const Cart = () => {
   const [isLoading, setisLoading] = useState(false);
   const products = useSelector((state) => state.cart);
@@ -58,7 +60,7 @@ const Cart = () => {
     setisLoading(true);
 
     try {
-      const res = await axios.post("${URL}/order.php", userData);
+      const res = await axios.post(`${URL}order`, userData);
       setisLoading(false);
 
       if (res.data.status === "success") {

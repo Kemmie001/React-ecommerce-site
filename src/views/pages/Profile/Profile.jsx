@@ -67,7 +67,7 @@ const ProfilePage = () => {
     };
 
     try {
-      const res = await axios.post(`${URL}/profile.php`, userData);
+      const res = await axios.post(`${URL}profile`, userData);
       if (res.data.status === "success") {
         setprofile(res.data.message);
       } else {
@@ -95,7 +95,7 @@ const ProfilePage = () => {
     setisLoading(true);
 
     try {
-      const res = await axios.put(`${URL}/update-profile.php`, userData);
+      const res = await axios.put(`${URL}update-profile`, userData);
       setisLoading(false);
       if (res.data.status === "success") {
         toast.success(res.data.message, {
@@ -120,7 +120,7 @@ const ProfilePage = () => {
     };
 
     try {
-      const res = await axios.post(`${URL}/address.php`, userData);
+      const res = await axios.post(`${URL}address`, userData);
       if (res.data.status === "success") {
         setaddress(res.data.message);
       } else {
@@ -148,7 +148,7 @@ const ProfilePage = () => {
     setisLoading(true);
 
     try {
-      const res = await axios.put(`${URL}/update-address.php`, userData);
+      const res = await axios.put(`${URL}update-address`, userData);
       setisLoading(false);
       if (res.data.status === "success") {
         toast.success(res.data.message, {
@@ -176,7 +176,7 @@ const ProfilePage = () => {
     setisLoading(true);
     if (new_password === confirmNewPassword) {
       try {
-        const res = await axios.patch(`${URL}/update-password.php`, userData);
+        const res = await axios.patch(`${URL}update-password`, userData);
         setisLoading(false);
         if (res.data.status === "success") {
           toast.success(res.data.message, {
@@ -217,7 +217,7 @@ const ProfilePage = () => {
     };
 
     try {
-      const res = await axios.post(`${URL}/get-orders.php`, userData);
+      const res = await axios.post(`${URL}get-orders`, userData);
       if (res.data.status === "success") {
         setorders(res.data.message.orders);
       } else {
