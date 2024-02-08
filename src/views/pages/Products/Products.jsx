@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 
+const URL = process.env.REACT_APP_BASE_URL;
+
 const Products = () => {
   const [isLoading, setisLoading] = useState(true);
   const [isLoadingShoe, setisLoadingShoe] = useState(true);
@@ -35,7 +37,7 @@ const Products = () => {
 
     try {
       const res = await axios.get(
-        `https://onibata.loftywebtech.com/products.php?page=${currentShoePage}&category=male-shoes`
+        `https://onibata.coralscale.com/api/products.php?page=${currentShoePage}&category=male-shoes`
       );
       setshoes(res.data);
       setisLoadingShoe(false);
@@ -50,7 +52,7 @@ const Products = () => {
 
     try {
       const resSandal = await axios.get(
-        `https://onibata.loftywebtech.com/products.php?page=${currentSandalsPage}&category=sandals`
+        `https://onibata.coralscale.com/api/products.php?page=${currentSandalsPage}&category=sandals`
       );
       setsandals(resSandal.data);
       setisLoadingSandal(false);
@@ -65,7 +67,7 @@ const Products = () => {
 
     try {
       const resSlipper = await axios.get(
-        `https://onibata.loftywebtech.com/products.php?page=${currentSlippersPage}&category=slippers`
+        `https://onibata.coralscale.com/api/products.php?page=${currentSlippersPage}&category=slippers`
       );
       setslippers(resSlipper.data);
       setisLoadingSlippers(false);
@@ -79,7 +81,7 @@ const Products = () => {
 
     try {
       const resBelt = await axios.get(
-        `https://onibata.loftywebtech.com/products.php?page=${currentBeltsPage}&category=belts`
+        `${URL}/products.php?page=${currentBeltsPage}&category=belts`
       );
       setbelts(resBelt.data);
       setisLoadingBelts(false);
@@ -93,7 +95,7 @@ const Products = () => {
 
     try {
       const resBelt = await axios.get(
-        `https://onibata.loftywebtech.com/products.php?page=${currentFemaleShoesPage}&category=female-shoes`
+        `${URL}/products.php?page=${currentFemaleShoesPage}&category=female-shoes`
       );
       setfshoes(resBelt.data);
       setisLoadingFemaleShoe(false);
