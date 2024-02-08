@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 
+const URL = process.env.REACT_APP_BASE_URL;
+
 const Checkout = () => {
   const user = localStorage.getItem("onibata-user");
   const user_details = JSON.parse(user);
@@ -32,10 +34,7 @@ const Checkout = () => {
     };
 
     try {
-      const res = await axios.post(
-        "https://onibata.loftywebtech.com/get-orders.php",
-        userData
-      );
+      const res = await axios.post(`${URL}/get-orders.php`, userData);
       if (res.data.status === "success") {
         setorders(res.data.message.orders);
         console.log(res.data.message.orders);
@@ -77,10 +76,7 @@ const Checkout = () => {
     };
 
     try {
-      const res = await axios.post(
-        "https://onibata.loftywebtech.com/address.php",
-        userData
-      );
+      const res = await axios.post(`${URL}/address.php`, userData);
       if (res.data.status === "success") {
         setaddress(res.data.message);
         console.log(res.data.message);
@@ -109,10 +105,7 @@ const Checkout = () => {
     setisLoading(true);
 
     try {
-      const res = await axios.put(
-        "https://onibata.loftywebtech.com/update-address.php",
-        userData
-      );
+      const res = await axios.put(`${URL}/update-address.php`, userData);
       setisLoading(false);
       if (res.data.status === "success") {
         toast.success(res.data.message, {
