@@ -14,7 +14,7 @@ const ProductCard = ({ item }) => {
         <div className="product-card">
           <span className="discount">{discountPercent}%</span>
           <div className="product-img">
-            <img src={`${URL}` + item.image} alt={item.name} />
+            <img src={item.image} alt={item.name} />
           </div>
           <div className="">
             <p className="product">{item.name}</p>
