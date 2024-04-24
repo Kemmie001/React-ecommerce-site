@@ -1,4 +1,4 @@
-import { FaInstagram, FaTwitter, FaWhatsapp, FaLinkedin } from "react-icons/fa";
+import { FaInstagram, FaTwitter, FaWhatsapp, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { BsFillThreadsFill } from "react-icons/bs";
 import { Wrapper } from "./styles";
 import { Link } from "react-router-dom";
@@ -78,6 +78,9 @@ const Footer = () => {
 							</a>
 							<a href="https://www.linkedin.com/company/onibata-mall/">
 								<FaLinkedin />
+							</a>
+							<a href="https://www.youtube.com/channel/UC58RA9kd8MJZLF1RXSyFhbg">
+								<FaYoutube />
 							</a>
 							<a href="https://www.threads.net/@onibata_mall">
 								<BsFillThreadsFill />

@@ -5,7 +5,6 @@ export const Wrapper = styled.div`
     .title{
         background: #9E005D;
         color: #fff;
-        height: 90px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -14,7 +13,9 @@ export const Wrapper = styled.div`
  .posts{
     padding: 0 5%;
     display: flex;
-    gap: 5%;
+    gap: 40px;
+    margin: 0 auto;
+    width: fit-content;
     @media screen and (max-width: 768px){
         display: block;
     }

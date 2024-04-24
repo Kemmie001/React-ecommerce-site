@@ -5,7 +5,15 @@ const Banner = () => {
 	register();
 	return (
 		<>
-			<swiper-container slides-per-view="1" speed="5" loop="true" css-mode="true" autoplay>
+			<swiper-container
+				slides-per-view="1"
+				speed="5"
+				loop="true"
+				css-mode="true"
+				autoplay
+				className="slider"
+				style={{ zIndex: "-1" }}
+			>
 				<swiper-slide>
 					<Wrapper>
 						<div>
@@ -65,10 +73,10 @@ const Banner = () => {
                 Confidence </span> Anywhere You Go. 
                 </h2> */}
 									<h1>
-										Get easy access to various Nigeria
-										<br /> Made Footwears
+										Handmade shoes in Nigeria now accessible
+										<br /> and available to all
 									</h1>
-									<p>Quality, Refined and Comfortable shoes guaranteed to last you for years</p>
+									<p>Quality and Comfortable shoes guaranteed to last you for years.</p>
 									<button className="btn-primary">Shop now</button>
 								</div>
 							</div>

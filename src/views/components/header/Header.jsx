@@ -16,7 +16,7 @@ const Header = () => {
             <div className="header">
             <div className="head-ad">
             {/* <marquee>Free delivery on Orders Above N25,000 anywhere in Nigeria </marquee> */}
-                <h3>Free delivery on Orders Above N25,000 anywhere in Nigeria</h3>
+                <h3>Free delivery on Orders Above N50,000 anywhere in Nigeria</h3>
                 
 { (!main?.isLoggedIn) ?
   
