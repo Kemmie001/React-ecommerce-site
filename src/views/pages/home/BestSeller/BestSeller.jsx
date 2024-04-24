@@ -6,16 +6,17 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Spinner from "../../../components/Spinner/Spinner";
 
+const URL = process.env.REACT_APP_BASE_URL;
+
 const BestSeller = () => {
   const [isLoading, setisLoading] = useState(true);
   const [page, setpage] = useState(1);
   const [products, setproducts] = useState();
   useEffect(() => {
     axios
-      .get(`https://onibata.loftywebtech.com/products.php?page=${page}`)
+      .get(`${URL}products?page=${page}`)
       .then((response) => {
         setproducts(response.data.message.products);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);

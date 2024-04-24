@@ -3,6 +3,8 @@ import { FaCartPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+const URL = process.env.REACT_APP_BASE_URL;
+
 const ProductCard = ({ item }) => {
   const discount = item.regular_price - item.sale_price;
   const discountPercent = (discount / item.regular_price) * 100;
@@ -12,10 +14,7 @@ const ProductCard = ({ item }) => {
         <div className="product-card">
           <span className="discount">{discountPercent}%</span>
           <div className="product-img">
-            <img
-              src={"https://loftywebtech.com/onibata" + item.image}
-              alt={item.name}
-            />
+            <img src={item.image} alt={item.name} />
           </div>
           <div className="">
             <p className="product">{item.name}</p>
